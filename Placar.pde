@@ -14,8 +14,8 @@ class Placar {
     pushStyle();  // Inicia um novo estilo
     fill(0);
     int tamanhoFonte = 20;
-    int posicaoPlacaX = 0 + 25;
-    int posicaoPlacaY = 0 + 25;
+    int posicaoPlacaX = 25;
+    int posicaoPlacaY = 25;
     int posicaoValores = posicaoPlacaX + 140;
     textSize(tamanhoFonte);
     text("Nível da bateria:", posicaoPlacaX, posicaoPlacaY);

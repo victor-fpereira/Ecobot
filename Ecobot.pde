@@ -3,6 +3,9 @@ Placar placar;
 Lixo lixo;
 Planta planta;
 Obstaculo obstaculo;
+ItemEspecial itemEspecial;
+Inimigo inimigo;
+
 int posicaoX, posicaoY;
 
 void setup() {
@@ -19,23 +22,29 @@ void setup() {
   robo.setPosicao(posicaoX, posicaoY);
   robo.setNivelBateria(100);
   robo.setVelocidade(50);
-  
+
   // Instancia objeto placar
   placar = new Placar();
 
   // Instancia objeto lixo
   lixo = new Lixo();
-  lixo.setPosicao(posicaoX,posicaoY);
-  
+  lixo.setPosicao(posicaoX - 50, posicaoY - 10);
+
   // Instancia objeto planta
   planta = new Planta();
   planta.setPosicao(posicaoX - 100, posicaoY - 10);
-  
-  // Instancia objeto item special
-    planta = new Planta();
-  planta.setPosicao(posicaoX - 100, posicaoY - 10);
-  
 
+  // Instancia objeto obstaculo
+  obstaculo = new Obstaculo();
+  obstaculo.setPosicao(posicaoX - 200, posicaoY - 10);
+  
+  // Instancia objeto inimigo
+  inimigo = new Inimigo();
+  inimigo.setPosicao(posicaoX - 300, posicaoY - 10);
+  
+  // Instancia objeto item especial
+  itemEspecial = new ItemEspecial();
+  itemEspecial.setPosicao(posicaoX - 400, posicaoY - 10);
 }
 
 void draw() {
@@ -43,8 +52,10 @@ void draw() {
   placar.mostraPontuacao();
   robo.desenha(color(0), 15);
   lixo.desenha(color(214, 214, 214), 15);
-  planta.desenha(color(50,225,55), 20);
-
+  planta.desenha(color(50, 225, 55), 15);
+  obstaculo.desenha(color(85, 115, 255), 15);
+  inimigo.desenha(color(255, 0, 0), 15);
+  itemEspecial.desenha(color(255, 230, 85), 15);
 }
 
 void keyPressed() {
