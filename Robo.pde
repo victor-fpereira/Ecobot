@@ -1,4 +1,9 @@
 class Robo extends ObjetoMapa {
+  
+  float x, y;
+  int tamanho;
+  color cor;
+ 
 
   // Muda o valor do nível da bateria
   void setNivelBateria(int nb) {
@@ -27,7 +32,7 @@ class Robo extends ObjetoMapa {
   void tempoBateriaAtiva() {
   }
 
-  void moveRobo(int x, int y) {
+  void moveRobo(float x, float y) {
     robo.setPosicao(x, y);
     robo.desenha(cor, largura);
   }
@@ -35,11 +40,11 @@ class Robo extends ObjetoMapa {
   void andar() {
     switch (key) {
     case 'd':
-      if (posicaoX + Global.velocidadeRobo < width) {
+      if (posicaoX + Global.velocidadeRobo < Global.frameSizeWidth) {
         posicaoX += Global.velocidadeRobo;
         robo.moveRobo(posicaoX, posicaoY);
       } else {
-        posicaoX = width - largura;
+        posicaoX = Global.frameSizeWidth - largura;
         robo.moveRobo(posicaoX, posicaoY);
       }
       robo.setNivelBateria(Global.nivelBateria - 1);
@@ -57,11 +62,11 @@ class Robo extends ObjetoMapa {
       break;
 
     case 'w':
-      if (posicaoY - Global.velocidadeRobo > 0) {
+      if (posicaoY - Global.velocidadeRobo > Global.cabecalho) {
         posicaoY -= Global.velocidadeRobo;
         robo.moveRobo(posicaoX, posicaoY);
       } else {
-        posicaoY = 0;
+        posicaoY = Global.cabecalho - largura;
         robo.moveRobo(posicaoX, posicaoY);
       }
       robo.setNivelBateria(Global.nivelBateria - 1);
@@ -72,7 +77,6 @@ class Robo extends ObjetoMapa {
         posicaoY += Global.velocidadeRobo;
         robo.moveRobo(posicaoX, posicaoY);
       } else {
-        robo.moveRobo(posicaoX, height - largura);
         posicaoY = height - largura;
         robo.moveRobo(posicaoX, posicaoY);
       }

@@ -16,6 +16,8 @@ class GameSettings {
         "Obstaculo: objeto azul.\n" +
         "Planta: objeto verde.\n" +
         "Planta seca: objeto marrom.\n" +
+        "Estação de recarga: objeto laranja.\n" +
+        "Robo: objeto preto.\n" +
         "Lixo: objeto cinza.", (width / 10) * 6, 25);
     
     popStyle();  // Restaura o estilo anterior

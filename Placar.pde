@@ -10,7 +10,7 @@ class Placar {
     pontuacao -= pontos;
   }
 
-  int mostraPontuacao() {
+  void mostraPontuacao() {
     pushStyle();  // Inicia um novo estilo
     fill(0);
     int tamanhoFonte = 20;
@@ -25,10 +25,11 @@ class Placar {
     text("Velocidade:", posicaoPlacaX, posicaoPlacaY * 3);
     text(Global.velocidadeRobo, posicaoValores, posicaoPlacaY * 3 );
     text("Lixo restante:", posicaoPlacaX, posicaoPlacaY * 4);
-    text(Global.lixoRestante, posicaoValores, posicaoPlacaY * 4);
+    text(Global.lixoMapa, posicaoValores, posicaoPlacaY * 4);
     text("Plantas secas:", posicaoPlacaX, posicaoPlacaY * 5);
     text(Global.plantasSecas, posicaoValores, posicaoPlacaY * 5);
+    text("Inimigos:", posicaoPlacaX, posicaoPlacaY * 6);
+    text(Global.inimigos, posicaoValores, posicaoPlacaY * 6);
     popStyle();  // Restaura o estilo anterior
-    return pontuacao;
   }
 }
