@@ -7,13 +7,8 @@ ItemEspecial itemEspecial;
 Inimigo inimigo;
 EstacaoRecarga estacaoRecarga;
 GameSettings gameSet;
-
-
 Mapa objetoMaisProximo;
-
 float posicaoX, posicaoY;
-
-
 ArrayList<Mapa> listaObjetos;
 
 
@@ -38,8 +33,12 @@ void setup() {
   // Instancia objeto placar
   placar = new Placar();
 
+  // Instancia objeto game set
+  gameSet = new GameSettings();
+
   // Gera coordenadas aleatórias para o lixo, de acordo com a quantidade setada na classe Global.lixoMapa
   listaObjetos = new ArrayList<>();
+
   for (int i=0; i < Global.lixoMapa; i++) {
     lixo = new Lixo();
     lixo.x = random(0, width);
@@ -56,27 +55,26 @@ void setup() {
     planta.y = random(Global.cabecalho, height);
     planta.setLargura(10);
     planta.cor = color(0, 255, 0);
-    listaObjetos.add(lixo);
+    listaObjetos.add(planta);
   }
 
-  // Instancia objeto obstaculo
-  obstaculo = new Obstaculo();
-  obstaculo.setPosicao(posicaoX - 200, posicaoY);
 
-  // Instancia objeto inimigo
-  inimigo = new Inimigo();
-  inimigo.setPosicao(posicaoX - 300, posicaoY);
+  //// Instancia objeto obstaculo
+  //obstaculo = new Obstaculo();
+  //obstaculo.setPosicao(posicaoX - 200, posicaoY);
 
-  // Instancia objeto item especial
-  itemEspecial = new ItemEspecial();
-  itemEspecial.setPosicao(posicaoX - 400, posicaoY);
+  //// Instancia objeto inimigo
+  //inimigo = new Inimigo();
+  //inimigo.setPosicao(posicaoX - 300, posicaoY);
 
-  // Instancia objeto game set
-  gameSet = new GameSettings();
+  //// Instancia objeto item especial
+  //itemEspecial = new ItemEspecial();
+  //itemEspecial.setPosicao(posicaoX - 400, posicaoY);
 
-  // Instancia a estacao de recarga
-  estacaoRecarga = new EstacaoRecarga();
-  estacaoRecarga.setPosicao(posicaoX - 500, posicaoY);
+
+  //// Instancia a estacao de recarga
+  //estacaoRecarga = new EstacaoRecarga();
+  //estacaoRecarga.setPosicao(posicaoX - 500, posicaoY);
 }
 
 void draw() {
@@ -95,7 +93,7 @@ void draw() {
       lixo.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
       break;
     case "planta":
-     planta.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
+      planta.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
       break;
     }
   }
