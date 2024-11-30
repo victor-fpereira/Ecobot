@@ -1,21 +1,4 @@
-class Planta extends ObjetoMapa {
+class Planta extends Mapa {
 
-  int quantidade;
-  
-  boolean plantaSeca;
-  
-  void setQuantidade(int quantidade) {
-    this.quantidade = quantidade;
-  }
-
-  int getQuantidade(){
-     return quantidade; 
-  }
-  
-  void plantaSeca() {
-  }
-
-  void plantaMolhada() {
-  }
 
 }

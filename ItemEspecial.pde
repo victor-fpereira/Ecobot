@@ -1,4 +1,1 @@
-class ItemEspecial extends ObjetoMapa {
-
-  int quantidade;
-}
+class ItemEspecial extends Mapa {}

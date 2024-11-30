@@ -1,3 +1,1 @@
-class EstacaoRecarga extends ObjetoMapa {
-  int quantidade;
-}
+class EstacaoRecarga extends Mapa {}

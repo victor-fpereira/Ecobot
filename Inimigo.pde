@@ -1,4 +1,1 @@
-class Inimigo extends ObjetoMapa {
-
-  int quantidade;
-}
+class Inimigo extends Mapa {}

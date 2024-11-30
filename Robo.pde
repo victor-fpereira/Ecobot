@@ -1,9 +1,4 @@
-class Robo extends ObjetoMapa {
-  
-  float x, y;
-  int tamanho;
-  color cor;
- 
+class Robo extends Mapa {
 
   // Muda o valor do nível da bateria
   void setNivelBateria(int nb) {
@@ -25,60 +20,64 @@ class Robo extends ObjetoMapa {
   void recarregarBateria() {
   }
 
-  void coletarLixo() {
+  void coletarLixo(Mapa obj) {
+    float dist = dist(robo.getX(), robo.getY(), obj.getX(), obj.getY());
+    println("Distancia"  + dist);
+    println("largura robo" + robo.getLargura());
+    println("largura objeto" + obj.getLargura());
+    if (dist - robo.getLargura() - obj.getLargura() <= 0) {
+      listaObjetos.remove(obj);
+    }
   }
 
   // A cada tempo T, o nível da bateria diminui.
   void tempoBateriaAtiva() {
   }
 
-  void moveRobo(float x, float y) {
-    robo.setPosicao(x, y);
-    robo.desenha(cor, largura);
-  }
-
   void andar() {
-    switch (key) {
-    case 'd':
-      if (posicaoX + Global.velocidadeRobo < Global.frameSizeWidth) {
-        posicaoX += Global.velocidadeRobo;
-        robo.moveRobo(posicaoX, posicaoY);
+    
+    // Move element based on arrow keys
+    switch (keyCode) {
+    case RIGHT:
+      if (x + Global.velocidadeRobo < Global.frameSizeWidth) {
+        x += Global.velocidadeRobo;
+        robo.desenha(x, y);
       } else {
-        posicaoX = Global.frameSizeWidth - largura;
-        robo.moveRobo(posicaoX, posicaoY);
+        x = Global.frameSizeWidth - largura;
+        robo.desenha(x, y);
       }
       robo.setNivelBateria(Global.nivelBateria - 1);
       break;
 
-    case 'a':
-      if (posicaoX - Global.velocidadeRobo > 0) {
-        posicaoX -= Global.velocidadeRobo;
-        robo.moveRobo(posicaoX, posicaoY);
+    case LEFT:
+      if (x - Global.velocidadeRobo > 0) {
+        x -= Global.velocidadeRobo;
+        robo.desenha(x, y);
       } else {
-        posicaoX = 0;
-        robo.moveRobo(posicaoX, posicaoY);
+        x = 0;
+        robo.desenha(x, y);
       }
       robo.setNivelBateria(Global.nivelBateria - 1);
       break;
 
-    case 'w':
-      if (posicaoY - Global.velocidadeRobo > Global.cabecalho) {
-        posicaoY -= Global.velocidadeRobo;
-        robo.moveRobo(posicaoX, posicaoY);
+    case UP:
+      if (y - Global.velocidadeRobo > Global.cabecalho) {
+        y -= Global.velocidadeRobo;
+        robo.desenha(x, y);
       } else {
-        posicaoY = Global.cabecalho - largura;
-        robo.moveRobo(posicaoX, posicaoY);
+        y = Global.cabecalho - largura;
+        robo.desenha(x, y);
       }
       robo.setNivelBateria(Global.nivelBateria - 1);
       break;
 
-    case 's':
-      if (posicaoY + Global.velocidadeRobo < height) {
-        posicaoY += Global.velocidadeRobo;
-        robo.moveRobo(posicaoX, posicaoY);
+    case DOWN:
+      if (y + Global.velocidadeRobo < height) {
+        y += Global.velocidadeRobo;
+        robo.desenha(x, y);
       } else {
-        posicaoY = height - largura;
-        robo.moveRobo(posicaoX, posicaoY);
+        y = height - largura;
+        robo.desenha(x, y);
       }
       robo.setNivelBateria(Global.nivelBateria - 1);
       break;

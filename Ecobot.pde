@@ -8,9 +8,14 @@ Inimigo inimigo;
 EstacaoRecarga estacaoRecarga;
 GameSettings gameSet;
 
-ArrayList<Lixo> listaLixo;
+
+Mapa objetoMaisProximo;
 
 float posicaoX, posicaoY;
+
+
+ArrayList<Mapa> listaObjetos;
+
 
 void setup() {
 
@@ -27,22 +32,32 @@ void setup() {
   robo.setPosicao(posicaoX, posicaoY);
   robo.setNivelBateria(Global.nivelBateria);
   robo.setVelocidade(Global.velocidadeRobo);
+  robo.setLargura(15);
+  robo.cor = color(0);
 
   // Instancia objeto placar
   placar = new Placar();
 
   // Gera coordenadas aleatórias para o lixo, de acordo com a quantidade setada na classe Global.lixoMapa
-  listaLixo = new ArrayList<>();
+  listaObjetos = new ArrayList<>();
   for (int i=0; i < Global.lixoMapa; i++) {
     lixo = new Lixo();
     lixo.x = random(0, width);
     lixo.y = random(Global.cabecalho, height);
-    listaLixo.add(lixo);
+    lixo.setLargura(15);
+    lixo.cor = color(200, 200, 200);
+    listaObjetos.add(lixo);
   }
 
-  // Instancia objeto planta
-  planta = new Planta();
-  planta.setPosicao(posicaoX - 100, posicaoY);
+  // Gera coordenadas aleatórias para a planta, de acordo com a quantidade setada na classe Global.plantas
+  for (int i=0; i < Global.plantas; i++) {
+    planta = new Planta();
+    planta.x = random(0, width);
+    planta.y = random(Global.cabecalho, height);
+    planta.setLargura(10);
+    planta.cor = color(0, 255, 0);
+    listaObjetos.add(lixo);
+  }
 
   // Instancia objeto obstaculo
   obstaculo = new Obstaculo();
@@ -71,22 +86,39 @@ void draw() {
   placar.mostraPontuacao();
   gameSet.mostraInstrucoesJogo();
 
-  robo.desenha(color(0), 15);
+  robo.desenha(robo.getX(), robo.getY());
 
   // Pega as coordenadas da lista coordenadas da lista de objetos do tipo lixo. Para cada objeto, pega o x e y.
-  for (int i=0; i<listaLixo.size(); i++) {
-    lixo.desenha(listaLixo.get(i).x, listaLixo.get(i).y, color(214, 214, 214), 15);
+  for (int i=0; i<listaObjetos.size(); i++) {
+    switch (listaObjetos.get(i).getTipoObjeto()) {
+    case "lixo":
+      lixo.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
+      break;
+    case "planta":
+     planta.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
+      break;
+    }
   }
 
-  planta.desenha(color(50, 225, 55), 15);
-  planta.setQuantidade(1);
+  //planta.desenha(color(50, 225, 55), 15);
+  //planta.setQuantidade(1);
 
-  obstaculo.desenha(color(0, 0, 255), 15);
-  inimigo.desenha(color(255, 0, 0), 15);
-  itemEspecial.desenha(color(255, 230, 85), 15);
-  estacaoRecarga.desenha(color(255, 130, 0), 15);
+  //obstaculo.desenha(color(0, 0, 255), 15);
+  //inimigo.desenha(color(255, 0, 0), 15);
+  //itemEspecial.desenha(color(255, 230, 85), 15);
+  //estacaoRecarga.desenha(color(255, 130, 0), 15);
 }
 
 void keyPressed() {
+
   robo.andar();
+
+  // Busca o objeto mais próximo do robo
+  Mapa obj = robo.encontraObjetoMaisProximo(listaObjetos);
+  if (key == ' ') {
+    switch (obj.getTipoObjeto()) {
+    case "lixo":
+      robo.coletarLixo(obj);
+    }
+  }
 }

@@ -1,16 +1,60 @@
 class Mapa {
 
-  //  ArrayList<Inimigo> listaInimigo = new ArrayList<>(); // Todos os inimigos do jogo
-  //ArrayList<EstacaoRecarga> listaEstacaoRecarga = new ArrayList<>(); // Todos as estacoes de recarga do jogo
-  //ArrayList<ItemEspecial> listaEstacaoRecarga1 = new ArrayList<>(); // Todos as estacoes de recarga do jogo
-  //ArrayList<Planta> listaPlanta = new ArrayList<>();
+  float x, y;
+  color cor;
+  String tipo;
+  float largura;
 
+  Mapa encontraObjetoMaisProximo(ArrayList<Mapa> lista) {
 
-  int larguraMapa = 600;
-  int alturaMapa = 600;
-  color corMapa = color(255);
+    float menorDistancia = Float.MAX_VALUE;
 
-  void desenhaMapa() {
+    // Itera sobre todos os objetos lixo criados para poder achar o mais próximo do robo
+    for (int i=0; i<lista.size(); i++) {
+      float dist = dist(robo.getX(), robo.getY(), lista.get(i).getX(), lista.get(i).getY());
+      if (dist < menorDistancia) {
+        menorDistancia = dist;
+        objetoMaisProximo = lista.get(i);
+      }
+    }
 
+    return objetoMaisProximo;
+  }
+
+  void desenha(float x, float y) {
+    // Push and pop style from documetation: https://processing.org/reference/pushStyle_.html
+    pushStyle();  // Inicia um novo estilo
+    fill(cor);
+    square(x, y, largura);
+    popStyle();  // Restaura o estilo anterior
+  }
+
+  void setPosicao(float x, float y) {
+    this.x = x;
+    this.y = y;
+  }
+
+  float getLargura() {
+    return largura;
+  }
+
+  void setLargura(float largura) {
+    this.largura = largura;
+  }
+
+  float getX() {
+    return x;
+  }
+
+  float getY() {
+    return y;
+  }
+
+  void setTipoObjeto(String tipo) {
+    this.tipo = tipo;
+  }
+
+  String getTipoObjeto() {
+    return tipo;
   }
 }

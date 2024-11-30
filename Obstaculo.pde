@@ -1,6 +1,1 @@
-class Obstaculo extends ObjetoMapa{
-  
-    int quantidade;
-    
-  
-}
+class Obstaculo extends Mapa{}

@@ -2,13 +2,11 @@ static class Global {
 
   static int nivelBateria = 100;
   static int pontuacao;
-  static int lixoMapa = 20;
+  static int lixoMapa = 5;
   static int velocidadeRobo = 25;
   static int plantasSecas = 5;
+  static int plantas = 10;
   static int inimigos = 5;
-
-  static final byte quadrado = 0;
-  static final byte circulo = 1;
   
   // Espaço que os elementos podem aparecer sem sobrepor os mostradores
   static final int frameSizeWidth = 1200;
