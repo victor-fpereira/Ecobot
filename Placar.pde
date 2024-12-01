@@ -10,6 +10,18 @@ class Placar {
     pontuacao -= pontos;
   }
 
+  void mostraPontuacaoFinal() {
+    pushStyle();  // Inicia um novo estilo
+    fill(0);
+    int tamanhoFonte = 20;
+    int posicaoPlacaY = 25;
+    textSize(tamanhoFonte);
+    text("Pontuação: " + Global.pontuacao, width / 2, posicaoPlacaY);
+    text("Lixo restante: " + Global.lixoMapa, width / 2, posicaoPlacaY * 2);
+    text("Plantas secas: " + Global.plantaSeca, width / 2, posicaoPlacaY * 3);
+    popStyle();  // Restaura o estilo anterior
+  }
+
   void mostraPontuacao() {
     pushStyle();  // Inicia um novo estilo
     fill(0);
@@ -27,7 +39,7 @@ class Placar {
     text("Lixo restante:", posicaoPlacaX, posicaoPlacaY * 4);
     text(Global.lixoMapa, posicaoValores, posicaoPlacaY * 4);
     text("Plantas secas:", posicaoPlacaX, posicaoPlacaY * 5);
-    text(Global.plantasSecas, posicaoValores, posicaoPlacaY * 5);
+    text(Global.plantas, posicaoValores, posicaoPlacaY * 5);
     text("Inimigos:", posicaoPlacaX, posicaoPlacaY * 6);
     text(Global.inimigos, posicaoValores, posicaoPlacaY * 6);
     popStyle();  // Restaura o estilo anterior

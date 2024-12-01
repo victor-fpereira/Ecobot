@@ -9,12 +9,45 @@ class Robo extends Mapa {
     Global.velocidadeRobo = v;
   }
 
+  int getVelocidade() {
+    return Global.velocidadeRobo;
+  }
+
+  void diminuiVelocidade(Mapa obj, int v) {
+    float dist = dist(robo.getX(), robo.getY(), obj.getX(), obj.getY());
+    if (dist - robo.getLargura() - obj.getLargura() <= 0) {
+      Global.velocidadeRobo -= v;
+    }
+  }
+
+  void aumentaVelocidade(Mapa obj, int v) {
+    float dist = dist(robo.getX(), robo.getY(), obj.getX(), obj.getY());
+    if (dist - robo.getLargura() - obj.getLargura() <= 0) {
+      Global.velocidadeRobo += v;
+    }
+  }
+
+  void aumentaNivelBateria(Mapa obj, int v) {
+    float dist = dist(robo.getX(), robo.getY(), obj.getX(), obj.getY());
+    if (dist - robo.getLargura() - obj.getLargura() <= 0) {
+      Global.nivelBateria += v;
+    }
+  }
+
   // Consulta o valor do nível da bateria
   int getNivelBateria() {
     return Global.nivelBateria;
   }
 
-  void regarPlanta() {
+  void regarPlanta(Mapa obj) {
+    Planta planta = (Planta) obj;
+    if (planta.plantaSeca) {
+      Global.nivelBateria -= 2;
+      Global.pontuacao += 10;
+      Global.plantas -= 1;
+      Global.plantaSeca -= 1;
+      planta.plantaSeca = false;
+    }
   }
 
   void recarregarBateria() {
@@ -22,11 +55,10 @@ class Robo extends Mapa {
 
   void coletarLixo(Mapa obj) {
     float dist = dist(robo.getX(), robo.getY(), obj.getX(), obj.getY());
-    println("Distancia"  + dist);
-    println("largura robo" + robo.getLargura());
-    println("largura objeto" + obj.getLargura());
     if (dist - robo.getLargura() - obj.getLargura() <= 0) {
       listaObjetos.remove(obj);
+      Global.pontuacao += Global.recompensaLixoColetado;
+      Global.lixoMapa -= 1;
     }
   }
 
@@ -35,7 +67,7 @@ class Robo extends Mapa {
   }
 
   void andar() {
-    
+
     // Move element based on arrow keys
     switch (keyCode) {
     case RIGHT:

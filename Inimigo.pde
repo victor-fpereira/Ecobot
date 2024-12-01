@@ -1,1 +1,5 @@
-class Inimigo extends Mapa {}
+class Inimigo extends Mapa {
+  Inimigo() {
+    super.setTipoObjeto("inimigo");
+  }
+}

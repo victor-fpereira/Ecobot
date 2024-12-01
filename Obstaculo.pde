@@ -1,1 +1,7 @@
-class Obstaculo extends Mapa{}
+class Obstaculo extends Mapa{
+
+    Obstaculo() {
+    super.setTipoObjeto("obstaculo");
+  }
+
+}

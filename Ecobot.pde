@@ -11,7 +11,6 @@ Mapa objetoMaisProximo;
 float posicaoX, posicaoY;
 ArrayList<Mapa> listaObjetos;
 
-
 void setup() {
 
   size(1200, 900);
@@ -58,28 +57,71 @@ void setup() {
     listaObjetos.add(planta);
   }
 
+  // Gera coordenadas aleatórias para a planta, de acordo com a quantidade setada na classe Global.plantas
+  for (int i=0; i < Global.plantaSeca; i++) {
+    planta = new Planta();
+    planta.x = random(0, width);
+    planta.y = random(Global.cabecalho, height);
+    planta.setLargura(10);
+    planta.plantaSeca = true;
+    listaObjetos.add(planta);
+  }
 
-  //// Instancia objeto obstaculo
-  //obstaculo = new Obstaculo();
-  //obstaculo.setPosicao(posicaoX - 200, posicaoY);
+  // Gera coordenadas aleatórias para a planta, de acordo com a quantidade setada na classe Global.plantas
+  for (int i=0; i < Global.obstaculos; i++) {
+    obstaculo = new Obstaculo();
+    obstaculo.x = random(0, width);
+    obstaculo.y = random(Global.cabecalho, height);
+    obstaculo.setLargura(10);
+    obstaculo.cor = color(0, 0, 255);
+    listaObjetos.add(obstaculo);
+  }
 
-  //// Instancia objeto inimigo
-  //inimigo = new Inimigo();
-  //inimigo.setPosicao(posicaoX - 300, posicaoY);
+  // Gera coordenadas aleatórias para a planta, de acordo com a quantidade setada na classe Global.plantas
+  for (int i=0; i < Global.estacaoRecarga; i++) {
+    estacaoRecarga = new EstacaoRecarga();
+    estacaoRecarga.x = random(0, width);
+    estacaoRecarga.y = random(Global.cabecalho, height);
+    estacaoRecarga.setLargura(10);
+    estacaoRecarga.cor = color(140, 48, 240);
+    listaObjetos.add(estacaoRecarga);
+  }
+  
+  // Gera coordenadas aleatórias para a planta, de acordo com a quantidade setada na classe Global.plantas
+  for (int i=0; i < Global.inimigos; i++) {
+    inimigo = new Inimigo();
+    inimigo.x = random(0, width);
+    inimigo.y = random(Global.cabecalho, height);
+    inimigo.setLargura(10);
+    inimigo.cor = color(255, 0, 0);
+    listaObjetos.add(inimigo);
+  }
+  
+  // Gera coordenadas aleatórias para a planta, de acordo com a quantidade setada na classe Global.plantas
+  for (int i=0; i < Global.itemEspecial; i++) {
+    itemEspecial = new ItemEspecial();
+    itemEspecial.x = random(0, width);
+    itemEspecial.y = random(Global.cabecalho, height);
+    itemEspecial.setLargura(10);
+    itemEspecial.cor = color(255, 255, 70);
+    listaObjetos.add(itemEspecial);
+  }
 
-  //// Instancia objeto item especial
-  //itemEspecial = new ItemEspecial();
-  //itemEspecial.setPosicao(posicaoX - 400, posicaoY);
-
-
-  //// Instancia a estacao de recarga
-  //estacaoRecarga = new EstacaoRecarga();
-  //estacaoRecarga.setPosicao(posicaoX - 500, posicaoY);
 }
 
 void draw() {
 
   background(255);
+
+
+  if (robo.getNivelBateria() <= 0 || robo.getVelocidade() <= 0 || (Global.plantaSeca == 0 && Global.lixoMapa == 0)) {
+    fill(50, 240, 62); // Red color
+    textAlign(CENTER, CENTER);
+    placar.mostraPontuacaoFinal();
+    textFont(createFont("Arial", 50));
+    text("O jogo acabou!", width / 2, height / 2);
+    return;
+  }
 
   placar.mostraPontuacao();
   gameSet.mostraInstrucoesJogo();
@@ -93,18 +135,28 @@ void draw() {
       lixo.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
       break;
     case "planta":
-      planta.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
+      Planta planta = (Planta) listaObjetos.get(i);
+      if (planta.plantaSeca) {
+        planta.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y, color(240, 150, 50));
+      } else {
+        planta.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y, color(0, 255, 50));
+      }
       break;
+    case "obstaculo":
+      obstaculo.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
+      break;
+    case "estacao":
+      estacaoRecarga.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
+      break;
+     case "inimigo":
+        inimigo.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
+      break;
+     case "itemEspecial":
+       itemEspecial.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
     }
   }
 
-  //planta.desenha(color(50, 225, 55), 15);
-  //planta.setQuantidade(1);
-
-  //obstaculo.desenha(color(0, 0, 255), 15);
-  //inimigo.desenha(color(255, 0, 0), 15);
   //itemEspecial.desenha(color(255, 230, 85), 15);
-  //estacaoRecarga.desenha(color(255, 130, 0), 15);
 }
 
 void keyPressed() {
@@ -117,6 +169,26 @@ void keyPressed() {
     switch (obj.getTipoObjeto()) {
     case "lixo":
       robo.coletarLixo(obj);
+      break;
+    case "planta":
+      robo.regarPlanta(obj);
+      break;
     }
   }
+  switch (keyCode) {
+    case RIGHT:
+    case LEFT:
+    case UP:
+    case DOWN:
+      if (obj.getTipoObjeto() == "obstaculo") {
+        robo.diminuiVelocidade(obj, 1);
+      } else if (obj.getTipoObjeto() == "estacao") {
+        robo.aumentaNivelBateria(obj, 5);
+        robo.aumentaVelocidade(obj, 5);
+      } else if (obj.getTipoObjeto() == "inimigo") {
+        robo.diminuiVelocidade(obj, 5);
+      } else if (obj.getTipoObjeto() == "itemEspecial") {
+        robo.aumentaNivelBateria(obj, 500);
+      }
+    }
 }

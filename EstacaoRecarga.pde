@@ -1,1 +1,5 @@
-class EstacaoRecarga extends Mapa {}
+class EstacaoRecarga extends Mapa {
+  EstacaoRecarga() {
+    super.setTipoObjeto("estacao");
+  }
+}
