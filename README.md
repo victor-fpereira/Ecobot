@@ -22,3 +22,7 @@ O inimigo vai evoluindo conforme o jogo avanca
 No nivel 1,  inimigo rouba bateria
 
 No nivel 2, o inimigo rouba bateria e faz o robo perder o lixo que coletou
+
+O nível muda conforme a pontuação do robo aumenta
+
+As plantas secam conforme o tempo decorre.
