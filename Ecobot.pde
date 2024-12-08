@@ -123,7 +123,7 @@ void draw() {
   displayHud.desenharHUD();
 
   if (robo.getNivelBateria() <= 0 || robo.getVelocidade() <= 0 || (Global.plantaSeca == 0 && Global.lixoMapa == 0)) {
-    placar.mostraPontuacaoFinal1();
+    placar.mostraPontuacaoFinal();
     return;
   }
 

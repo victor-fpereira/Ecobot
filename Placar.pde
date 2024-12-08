@@ -10,7 +10,7 @@ class Placar {
     pontuacao -= pontos;
   }
 
-  void mostraPontuacaoFinal1() {
+  void mostraPontuacaoFinal() {
     pushStyle(); // Salva o estilo atual
 
     background(255);
