@@ -10,16 +10,35 @@ class Placar {
     pontuacao -= pontos;
   }
 
-  void mostraPontuacaoFinal() {
-    pushStyle();  // Inicia um novo estilo
-    fill(0);
-    int tamanhoFonte = 20;
-    int posicaoPlacaY = 25;
-    textSize(tamanhoFonte);
-    text("Pontuação: " + Global.pontuacao, width / 2, posicaoPlacaY);
-    text("Lixo restante: " + Global.lixoMapa, width / 2, posicaoPlacaY * 2);
-    text("Plantas secas: " + Global.plantaSeca, width / 2, posicaoPlacaY * 3);
-    popStyle();  // Restaura o estilo anterior
+  void mostraPontuacaoFinal1() {
+    pushStyle(); // Salva o estilo atual
+
+    background(255);
+
+    // Fundo do placar
+    fill(34, 139, 34, 200); // Verde escuro com transparência
+    rectMode(CENTER);
+    rect(width / 2, height / 2, width * 0.8, height * 0.6, 20); // Placa arredondada
+
+    // Título
+    textAlign(CENTER);
+    textSize(32);
+    fill(255, 223, 0); // Amarelo vibrante
+    text("Placar Final", width / 2, height / 2 - 100);
+
+    // Informações
+    textSize(20);
+    fill(255); // Texto branco
+    text("Pontuação: " + Global.pontuacao, width / 2, height / 2 - 40);
+    text("Lixo restante: " + Global.lixoMapa, width / 2, height / 2);
+    text("Plantas secas: " + Global.plantaSeca, width / 2, height / 2 + 40);
+
+    // Botão ou instrução para reiniciar
+    textSize(18);
+    fill(255, 69, 0); // Laranja vibrante
+    text("Pressione 'R' para reiniciar o jogo", width / 2, height / 2 + 100);
+
+    popStyle(); // Restaura o estilo anterior
   }
 
   void mostraPontuacao() {
