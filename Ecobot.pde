@@ -7,7 +7,8 @@ ItemEspecial itemEspecial;
 Inimigo inimigo;
 EstacaoRecarga estacaoRecarga;
 GameSettings gameSet;
-Mapa objetoMaisProximo;
+Mapa mapa;
+
 float posicaoX, posicaoY;
 ArrayList<Mapa> listaObjetos;
 
@@ -20,6 +21,10 @@ void setup() {
   // Posicao inical dos objetos
   posicaoX = width / 2;
   posicaoY = height / 2;
+
+  mapa = new Mapa();
+
+  rectMode(CENTER);
 
   // Instancia objeto robo e configura algumas funcionalidades
   robo = new Robo();
@@ -86,7 +91,7 @@ void setup() {
     estacaoRecarga.cor = color(140, 48, 240);
     listaObjetos.add(estacaoRecarga);
   }
-  
+
   // Gera coordenadas aleatórias para a planta, de acordo com a quantidade setada na classe Global.plantas
   for (int i=0; i < Global.inimigos; i++) {
     inimigo = new Inimigo();
@@ -96,7 +101,7 @@ void setup() {
     inimigo.cor = color(255, 0, 0);
     listaObjetos.add(inimigo);
   }
-  
+
   // Gera coordenadas aleatórias para a planta, de acordo com a quantidade setada na classe Global.plantas
   for (int i=0; i < Global.itemEspecial; i++) {
     itemEspecial = new ItemEspecial();
@@ -106,15 +111,13 @@ void setup() {
     itemEspecial.cor = color(255, 255, 70);
     listaObjetos.add(itemEspecial);
   }
-
 }
 
 void draw() {
 
   background(255);
 
-
-  if (robo.getNivelBateria() <= 0 || robo.getVelocidade() <= 0 || (Global.plantaSeca == 0 && Global.lixoMapa == 0)) {
+  if (robo.getNivelBateria() <= 0 || (Global.plantaSeca == 0 && Global.lixoMapa == 0)) {
     fill(50, 240, 62); // Red color
     textAlign(CENTER, CENTER);
     placar.mostraPontuacaoFinal();
@@ -125,70 +128,30 @@ void draw() {
 
   placar.mostraPontuacao();
   gameSet.mostraInstrucoesJogo();
+  robo.andar();
 
-  robo.desenha(robo.getX(), robo.getY());
-
-  // Pega as coordenadas da lista coordenadas da lista de objetos do tipo lixo. Para cada objeto, pega o x e y.
-  for (int i=0; i<listaObjetos.size(); i++) {
-    switch (listaObjetos.get(i).getTipoObjeto()) {
-    case "lixo":
-      lixo.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
-      break;
-    case "planta":
-      Planta planta = (Planta) listaObjetos.get(i);
-      if (planta.plantaSeca) {
-        planta.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y, color(240, 150, 50));
-      } else {
-        planta.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y, color(0, 255, 50));
-      }
-      break;
-    case "obstaculo":
-      obstaculo.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
-      break;
-    case "estacao":
-      estacaoRecarga.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
-      break;
-     case "inimigo":
-        inimigo.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
-      break;
-     case "itemEspecial":
-       itemEspecial.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
-    }
-  }
-
-  //itemEspecial.desenha(color(255, 230, 85), 15);
+  mapa.desenhaObjetosEstaticos(listaObjetos);
+  
+  robo.interacaoObjetos();
+  
+  
 }
 
 void keyPressed() {
 
-  robo.andar();
-
-  // Busca o objeto mais próximo do robo
-  Mapa obj = robo.encontraObjetoMaisProximo(listaObjetos);
-  if (key == ' ') {
-    switch (obj.getTipoObjeto()) {
-    case "lixo":
-      robo.coletarLixo(obj);
-      break;
-    case "planta":
-      robo.regarPlanta(obj);
-      break;
-    }
-  }
+  // Atualiza a posição atual baseada na tecla direcional que foi pressionada
   switch (keyCode) {
-    case RIGHT:
-    case LEFT:
-    case UP:
-    case DOWN:
-      if (obj.getTipoObjeto() == "obstaculo") {
-        robo.diminuiVelocidade(obj, 1);
-      } else if (obj.getTipoObjeto() == "estacao") {
-        robo.aumentaNivelBateria(obj, 5);
-        robo.aumentaVelocidade(obj, 5);
-      } else if (obj.getTipoObjeto() == "inimigo") {
-        robo.diminuiVelocidade(obj, 5);
-      } else if (obj.getTipoObjeto() == "itemEspecial") {
-        robo.aumentaNivelBateria(obj, 500);
-      }
-    }
+  case RIGHT:
+    Global.direcaoAtual = 1;
+    break;
+  case LEFT:
+    Global.direcaoAtual = 2;
+    break;
+  case UP:
+    Global.direcaoAtual = 3;
+    break;
+  case DOWN:
+    Global.direcaoAtual = 4;
+    break;
+  }
 }
