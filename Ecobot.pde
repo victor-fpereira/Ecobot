@@ -6,8 +6,9 @@ Obstaculo obstaculo;
 ItemEspecial itemEspecial;
 Inimigo inimigo;
 EstacaoRecarga estacaoRecarga;
-GameSettings gameSet;
+ControleJogo controleJogo;
 Mapa objetoMaisProximo;
+DisplayHud displayHud;
 float posicaoX, posicaoY;
 ArrayList<Mapa> listaObjetos;
 
@@ -16,6 +17,8 @@ void setup() {
   size(1200, 900);
 
   background(255);
+
+  displayHud = new DisplayHud();
 
   // Posicao inical dos objetos
   posicaoX = width / 2;
@@ -33,7 +36,7 @@ void setup() {
   placar = new Placar();
 
   // Instancia objeto game set
-  gameSet = new GameSettings();
+  controleJogo = new ControleJogo();
 
   // Gera coordenadas aleatórias para o lixo, de acordo com a quantidade setada na classe Global.lixoMapa
   listaObjetos = new ArrayList<>();
@@ -86,7 +89,7 @@ void setup() {
     estacaoRecarga.cor = color(140, 48, 240);
     listaObjetos.add(estacaoRecarga);
   }
-  
+
   // Gera coordenadas aleatórias para a planta, de acordo com a quantidade setada na classe Global.plantas
   for (int i=0; i < Global.inimigos; i++) {
     inimigo = new Inimigo();
@@ -96,7 +99,7 @@ void setup() {
     inimigo.cor = color(255, 0, 0);
     listaObjetos.add(inimigo);
   }
-  
+
   // Gera coordenadas aleatórias para a planta, de acordo com a quantidade setada na classe Global.plantas
   for (int i=0; i < Global.itemEspecial; i++) {
     itemEspecial = new ItemEspecial();
@@ -106,25 +109,24 @@ void setup() {
     itemEspecial.cor = color(255, 255, 70);
     listaObjetos.add(itemEspecial);
   }
-
 }
 
 void draw() {
 
-  background(255);
-
-
-  if (robo.getNivelBateria() <= 0 || robo.getVelocidade() <= 0 || (Global.plantaSeca == 0 && Global.lixoMapa == 0)) {
-    fill(50, 240, 62); // Red color
-    textAlign(CENTER, CENTER);
-    placar.mostraPontuacaoFinal();
-    textFont(createFont("Arial", 50));
-    text("O jogo acabou!", width / 2, height / 2);
+  if (controleJogo.mostrarIntro) {
+    controleJogo.mostrarIntroducao();
     return;
   }
 
-  placar.mostraPontuacao();
-  gameSet.mostraInstrucoesJogo();
+  background(255);
+
+  displayHud.desenharHUD();
+
+  if (robo.getNivelBateria() <= 0 || robo.getVelocidade() <= 0 || (Global.plantaSeca == 0 && Global.lixoMapa == 0)) {
+    placar.mostraPontuacaoFinal();
+    return;
+  }
+
 
   robo.desenha(robo.getX(), robo.getY());
 
@@ -155,11 +157,18 @@ void draw() {
        itemEspecial.desenha(listaObjetos.get(i).x, listaObjetos.get(i).y);
     }
   }
-
-  //itemEspecial.desenha(color(255, 230, 85), 15);
 }
 
 void keyPressed() {
+
+  
+  // Sai da ControleJogodução do jogo
+  if (key == ' ') {
+     controleJogo.mostrarIntro = false;
+  } else if (key == 'r' || keyCode == 'R'){
+    controleJogo.reinicia();
+  }
+
 
   robo.andar();
 
@@ -176,19 +185,19 @@ void keyPressed() {
     }
   }
   switch (keyCode) {
-    case RIGHT:
-    case LEFT:
-    case UP:
-    case DOWN:
-      if (obj.getTipoObjeto() == "obstaculo") {
-        robo.diminuiVelocidade(obj, 1);
-      } else if (obj.getTipoObjeto() == "estacao") {
-        robo.aumentaNivelBateria(obj, 5);
-        robo.aumentaVelocidade(obj, 5);
-      } else if (obj.getTipoObjeto() == "inimigo") {
-        robo.diminuiVelocidade(obj, 5);
-      } else if (obj.getTipoObjeto() == "itemEspecial") {
-        robo.aumentaNivelBateria(obj, 500);
-      }
+  case RIGHT:
+  case LEFT:
+  case UP:
+  case DOWN:
+    if (obj.getTipoObjeto() == "obstaculo") {
+      robo.diminuiVelocidade(obj, 1);
+    } else if (obj.getTipoObjeto() == "estacao") {
+      robo.aumentaNivelBateria(obj, 5);
+      robo.aumentaVelocidade(obj, 5);
+    } else if (obj.getTipoObjeto() == "inimigo") {
+      robo.diminuiVelocidade(obj, 5);
+    } else if (obj.getTipoObjeto() == "itemEspecial") {
+      robo.aumentaNivelBateria(obj, 10);
     }
+  }
 }

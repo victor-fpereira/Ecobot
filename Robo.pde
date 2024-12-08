@@ -28,9 +28,17 @@ class Robo extends Mapa {
   }
 
   void aumentaNivelBateria(Mapa obj, int v) {
+
     float dist = dist(robo.getX(), robo.getY(), obj.getX(), obj.getY());
     if (dist - robo.getLargura() - obj.getLargura() <= 0) {
-      Global.nivelBateria += v;
+      if (Global.nivelBateria < Global.limiteBateria) {
+        //  Evita que a o nível da bateria suba acima do limite máximo  
+        if (Global.nivelBateria + v  >=  Global.limiteBateria) {
+          Global.nivelBateria = Global.limiteBateria;
+        } else {
+          Global.nivelBateria += v;
+        }
+      }
     }
   }
 
