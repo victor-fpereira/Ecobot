@@ -4,6 +4,7 @@ class Inimigo extends Objeto {
   // e vai diminuindo a distância entre eles, de forma que exista uma 'perseguição'.
   // Essa função poderia estar na classe Objeto, mas como é algo específico, achei melhor
   // criar essa classe extra. Melhora a organização e o código fica mais fácil de se entender.
+  // FONTE: CHATGPT
 
   void perseguir(ArrayList<Objeto> listaInimigos, float roboX, float roboY, float deltaTime) {
 

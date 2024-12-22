@@ -1,5 +1,6 @@
 static class Global {
   
+  static boolean fimJogo = false;
   static boolean reiniciaJogo = false;
   static boolean mostrarIntro = false;
 
@@ -32,6 +33,7 @@ static class Global {
   static int obstaculosID = 5;
   static int estacaoRecargaID = 6;
 
+  static int recompensaItemEspecial = 12;
   static int recompensaLixoColetado = 5;
   static int recompensaPlantaRegada = 10;
   static int energiaBateriaRegarPlanta = 2;

@@ -31,11 +31,10 @@ class Intro {
       width / 2, height / 1.6
       );
 
-
     textAlign(CENTER);
     textSize(25);
     fill(255);
-    text("Pressione ESPAÇO para começar!", width / 2, height - 50);
+    text("Pressione ENTER para começar!", width / 2, height - 50);
 
     popStyle();
   }

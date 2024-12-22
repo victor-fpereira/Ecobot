@@ -2,12 +2,15 @@ class Fases {
 
   int nivel = 1;
   int numeroFases = 0;
+  boolean tocarSomFimJogo = true;
+  boolean tocarSomInicioJogo = true;
+
+  // FONTE: CHATGPT
 
   float alpha = 0;        // Opacidade inicial
   float fadeDuration = 2; // Duração do fade em segundos
   float startTime;        // Tempo de início do fade
   boolean fading = true;  // Controla se o fade está ativo
-
 
 
   void defineNovoNivelJogo(int nivel) {
@@ -16,8 +19,8 @@ class Fases {
 
     int[][] configuracoes = {
       {200, 100, 5, 5, 5, 5, 5, 5}, // Nível 1
-      {100, 80, 4, 4, 4, 4, 4, 4}, // Nível 2
-      {50, 60, 3, 3, 3, 3, 3, 3}    // Nível 3
+      {200, 80, 4, 4, 10, 4, 10, 4}, // Nível 2
+      {200, 60, 3, 3, 15, 3, 15, 3}    // Nível 3
     };
 
     // Atualiza a quantidade de fases do jogo
@@ -49,15 +52,19 @@ class Fases {
     criaListaObjetos();
   }
 
+  // FONTE: CHATGPT
+
   void iniciarFade() {
     startTime = millis(); // Reinicia o timer do fade
-    println(startTime);
     fading = true;        // Ativa o fade
     loop();               // Garante que o loop de desenho esteja ativo
   }
 
 
+  // FONTE: CHATGPT
+
   void fazerFade() {
+
     // Atualiza o valor do alpha diretamente com base no millis()
     alpha = map(millis(), startTime, startTime + fadeDuration * 1000, 0, 255);
     alpha = constrain(alpha, 0, 255); // Garante que fique dentro do intervalo
@@ -75,14 +82,28 @@ class Fases {
     }
   }
 
-  void fimDoJogo() {
+  void fimDoJogo(boolean  venceu) {
     background(10, 148, 196);
     new Pontuacao().mostraPontuacaoFinal();
+    //somFundo.stop();
+    Global.fimJogo = true;
+    if (tocarSomFimJogo) {
+      if (venceu) {
+        somFimJogoVencer.play();
+      } else {
+        somFimJogoPerder.play();
+      }
+    }
+    tocarSomFimJogo = false;
   }
 
   void keyPressed() {
-    if (key == ' ') {
+    if (keyPressed && key == ENTER) {
       Global.mostrarIntro = false;
+      if (tocarSomInicioJogo) {
+        somInicioJogo.play();
+        tocarSomInicioJogo = false;
+      }
     }
     if (key == 'r' || key == 'R') {
       Global.mostrarIntro = true;

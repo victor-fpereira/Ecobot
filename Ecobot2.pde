@@ -1,4 +1,4 @@
-// Posição do robo
+import processing.sound.*;
 
 Robo robo;
 Inimigo inimigo;
@@ -17,6 +17,9 @@ DisplayHud displayHud;
 Intro intro;
 
 Fases fases;
+
+SoundFile somFundo, somPontuacao, somItemEspecial, somInimigo, somObstaculo,
+  somInicioJogo, somFimJogoVencer, somFimJogoPerder, somRecargaBateria, somTransicaoFase;
 
 void setup() {
 
@@ -59,10 +62,23 @@ void setup() {
   }
 
   fases = new Fases();
-
   fases.defineNovoNivelJogo(fases.nivel);
 
   criaListaObjetos();
+
+  somFundo = new SoundFile(this, "sound/fundo.mp3");
+  somFundo.loop(); // Toca continuamente
+
+  // TODOS OS CONTEÚDOS DE SOM FORAM COPIADOS DO https://pixabay.com/pt/music/search/ciclo/
+  somInicioJogo = new SoundFile(this, "sound/gamestart.mp3");
+  somTransicaoFase = new SoundFile(this, "sound/muda-fase.mp3");
+  somPontuacao = new SoundFile(this, "sound/pontuacao.mp3");
+  somItemEspecial = new SoundFile(this, "sound/magic-items.mp3");
+  somInimigo =  new SoundFile(this, "sound/enemy.mp3");
+  somObstaculo =  new SoundFile(this, "sound/obstaculo.mp3");
+  somRecargaBateria = new SoundFile(this, "sound/engine.mp3");
+  somFimJogoVencer = new SoundFile(this, "sound/win.mp3");
+  somFimJogoPerder = new SoundFile(this, "sound/loose.mp3");
 }
 
 void draw() {
@@ -74,14 +90,20 @@ void draw() {
   } else if (Global.reiniciaJogo) {
     fases.redefinirConfiguracoes();
     Global.reiniciaJogo = false;
-  } else if (Global.nivelBateria <= 0 || Global.velocidadeRobo <= 0 || (Global.plantaQtd == 0 && Global.lixoQtd == 0)) {
+  } else if (Global.nivelBateria > 0 && Global.velocidadeRobo > 0 && Global.plantaQtd == 0 && Global.lixoQtd == 0) {
     if (fases.nivel < fases.numeroFases) {
       fases.nivel++; // Aumenta um nível da fase em 1
       fases.defineNovoNivelJogo(fases.nivel);
       criaListaObjetos();
+      somTransicaoFase.play();
     } else {
-      fases.fimDoJogo();
+        Global.fimJogo = true;
+        fases.fimDoJogo(true);
+        return;
     }
+  } else if (Global.nivelBateria <= 0 || Global.velocidadeRobo <= 0) {
+    Global.fimJogo = true;
+    fases.fimDoJogo(false);
     return;
   }
 

@@ -33,6 +33,7 @@ class Robo extends Objeto {
       if (verificarColisao(obj, this.x, this.y) && key == ' ') {
         Global.lixoQtd--; // Atualiza a quantidade de lixo no jogo
         Global.pontuacao += Global.recompensaLixoColetado; // Atualiza a pontuação do jogador
+        somPontuacao.play();  // Toca o som de pontuacao
         return true; // Remove o objeto da lista
       }
       return false; // Mantém o objeto
@@ -45,6 +46,7 @@ class Robo extends Objeto {
       if (verificarColisao(obj, this.x, this.y) && key == ' ' && !obj.interagido) {
         Global.plantaQtd--; // Atualiza a quantidade de planta no jogo
         Global.pontuacao += Global.recompensaPlantaRegada;  // Atualiza a pontuação do jogador
+        somPontuacao.play();   // Toca o som de pontuacao
         obj.imagem = imagemPlanta;
         obj.interagido = true;  // Marca o objeto como interagido
       }
@@ -54,8 +56,9 @@ class Robo extends Objeto {
   void estacao(ArrayList<Objeto> listaObjetos) {
     for (Objeto obj : listaObjetos) {
       if (verificarColisao(obj, this.x, this.y) && key == ' ') {
-        if (Global.nivelBateria + Global.aumentoBateria < Global.limiteBateria) {
+        if (Global.nivelBateria + Global.aumentoBateria <= Global.limiteBateria) {
           Global.nivelBateria += Global.aumentoBateria; // Aumenta a bateria do robô
+          somRecargaBateria.play();
         } else {
           Global.nivelBateria = Global.limiteBateria; // Não deixa ultrapassar o limite máximo
         }
@@ -72,6 +75,7 @@ class Robo extends Objeto {
       if (emColisao && !obj.interagido) {
         Global.nivelBateria -= Global.reducaoBateria; // Reduz a bateria do robô
         obj.interagido = true; // Marca que o objeto está em colisão
+        somObstaculo.play();   // Toca o som do obstaculo
       }
 
       // Reseta a flag quando não há mais colisão
@@ -85,11 +89,11 @@ class Robo extends Objeto {
     for (Objeto obj : listaObjetos) {
       // Verifica se há colisão atualmente
       boolean emColisao = verificarColisao(obj, this.x, this.y);
-
+      
       // Interage apenas quando a colisão começa (de false -> true)
       if (emColisao && !obj.interagido) {
         Global.velocidadeRobo -= Global.velocidadeDeReducao; // Reduz a velocidade do robô
-
+         somInimigo.play();   // Toca o som do inimigo
         obj.interagido = true; // Marca que o objeto está em colisão
       }
 
@@ -114,8 +118,10 @@ class Robo extends Objeto {
     listaObjetos.removeIf(obj -> {
       if (verificarColisao(obj, this.x, this.y)) {
         Global.itemEspecialQtd--; // Atualiza a quantidade de planta no jogo
+        somItemEspecial.play();
         if (Global.velocidadeRobo + Global.velocidadeAceleracao < Global.limiteVelocidade) {
           Global.velocidadeRobo += Global.velocidadeAceleracao; // Aumenta a bateria do robô
+          Global.pontuacao += Global.recompensaItemEspecial;
         } else {
           Global.velocidadeRobo = Global.limiteVelocidade; // Não deixa ultrapassar o limite máximo
         }
