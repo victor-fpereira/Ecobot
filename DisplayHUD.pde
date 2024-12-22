@@ -6,9 +6,9 @@ class DisplayHud {
   // apresentadas ao jogador na tela, como status ou elementos importantes, sem interromper a interação com o jogo.
   // Fonte: CHATGPT
 
-  void desenharHUD(PImage imgLixo, PImage imgPlanta, PImage imgInimigo, PFont font) {
+  void desenharHUD() {
         
-    textFont(font);
+    textFont(fonte);
     
     // Fundo do HUD
     fill(0, 0, 0, 150); // Cor preta com transparência

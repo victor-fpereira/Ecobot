@@ -22,6 +22,8 @@ class Objeto {
 
   void desenha(ArrayList<Objeto> listaObjetos) {
     for (Objeto obj : listaObjetos) {
+      noFill();
+      noStroke();
       rect(obj.x, obj.y, Global.lado, Global.lado);
       image(obj.imagem, obj.x, obj.y, Global.lado, Global.lado);
     }

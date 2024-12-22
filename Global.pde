@@ -1,25 +1,28 @@
 static class Global {
+  
+  static boolean reiniciaJogo = false;
+  static boolean mostrarIntro = false;
 
   static int aumentoBateria = 10;
   static int reducaoBateria = 10;
   static int limiteBateria = 100;
-  static int nivelBateria = 100;
+  static int nivelBateria = 0;
   static int pontuacao;
 
   static int velocidadeAceleracao = 10;
   static int velocidadeDeReducao = 10;
-  static int velocidadeRobo = 200;
+  static int velocidadeRobo = 0;
   static int limiteVelocidade = 200;
   static int plantas = 5;
   static int plantaSeca = 5;
 
   static int roboQtd = 1;
-  static int lixoQtd = 1;
-  static int plantaQtd = 1;
-  static int inimigoQtd = 5;
-  static int itemEspecialQtd = 5;
-  static int obstaculosQtd = 5;
-  static int estacaoRecargaQtd = 2;
+  static int lixoQtd = 0;
+  static int plantaQtd = 0;
+  static int inimigoQtd = 0;
+  static int itemEspecialQtd = 0;
+  static int obstaculosQtd = 0;
+  static int estacaoRecargaQtd = 0;
 
   static int roboID = 0;
   static int lixoID = 1;
