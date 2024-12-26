@@ -23,10 +23,7 @@ SoundFile somFundo, somPontuacao, somItemEspecial, somInimigo, somObstaculo,
 
 void setup() {
 
-  //fullScreen();
-
-  size(1000, 1000);
-
+  fullScreen();
   noLoop();             // Para o loop automático de draw
   noFill();
 
@@ -60,7 +57,7 @@ void setup() {
   imgFundo[2] = loadImage("background/fase3.jpg");
 
   for (int i=0; i<imgFundo.length; i++) {
-    imgFundo[i].resize(1000, 1000);
+    imgFundo[i].resize(width, height);
   }
 
   fases = new Fases();
