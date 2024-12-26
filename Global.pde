@@ -5,13 +5,13 @@ static class Global {
   static boolean mostrarIntro = false;
 
   static int aumentoBateria = 10;
-  static int reducaoBateria = 10;
+  static int reducaoBateria = 20;
   static int limiteBateria = 100;
   static int nivelBateria = 0;
   static int pontuacao;
 
   static int velocidadeAceleracao = 10;
-  static int velocidadeDeReducao = 10;
+  static int velocidadeDeReducao = 20;
   static int velocidadeRobo = 0;
   static int limiteVelocidade = 200;
   static int plantas = 5;

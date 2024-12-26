@@ -77,6 +77,7 @@ class Fases {
     // Finaliza o fade após o tempo especificado
     if (millis() >= startTime + fadeDuration * 1000) {
       fading = false; // Interrompe o fade
+      somFundo.loop(); // Retoma o loop do som de fundo
     } else {
       redraw(); // Atualiza manualmente o próximo frame
     }
@@ -89,8 +90,10 @@ class Fases {
     Global.fimJogo = true;
     if (tocarSomFimJogo) {
       if (venceu) {
+        somFundo.pause();
         somFimJogoVencer.play();
       } else {
+        somFundo.pause();
         somFimJogoPerder.play();
       }
     }
@@ -101,6 +104,7 @@ class Fases {
     if (keyPressed && key == ENTER) {
       Global.mostrarIntro = false;
       if (tocarSomInicioJogo) {
+        somFundo.pause();
         somInicioJogo.play();
         tocarSomInicioJogo = false;
       }
@@ -108,6 +112,9 @@ class Fases {
     if (key == 'r' || key == 'R') {
       Global.mostrarIntro = true;
       Global.reiniciaJogo = true;
+      tocarSomInicioJogo = true;
+      tocarSomFimJogo = true;
+      somFundo.loop();
     }
   }
 }

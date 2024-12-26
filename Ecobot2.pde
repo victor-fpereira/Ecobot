@@ -35,6 +35,8 @@ void setup() {
   intro = new Intro();
 
   Global.mostrarIntro = true;
+  
+  // Os ícones foram pegos do site https://www.flaticon.com/br/
 
   // carrega as imagens dos icones
   imgPlanta = loadImage("icon/planta.png");
@@ -70,6 +72,7 @@ void setup() {
   somFundo.loop(); // Toca continuamente
 
   // TODOS OS CONTEÚDOS DE SOM FORAM COPIADOS DO https://pixabay.com/pt/music/search/ciclo/
+  
   somInicioJogo = new SoundFile(this, "sound/gamestart.mp3");
   somTransicaoFase = new SoundFile(this, "sound/muda-fase.mp3");
   somPontuacao = new SoundFile(this, "sound/pontuacao.mp3");
@@ -97,9 +100,9 @@ void draw() {
       criaListaObjetos();
       somTransicaoFase.play();
     } else {
-        Global.fimJogo = true;
-        fases.fimDoJogo(true);
-        return;
+      Global.fimJogo = true;
+      fases.fimDoJogo(true);
+      return;
     }
   } else if (Global.nivelBateria <= 0 || Global.velocidadeRobo <= 0) {
     Global.fimJogo = true;
