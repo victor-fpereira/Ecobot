@@ -4,7 +4,6 @@ class Objeto {
   float x, y;
   int tipo;
   int quantidade;
-  double id;
   PImage imagem;
   boolean mudarImagem = false;
   boolean interagido, emColisao;
@@ -17,7 +16,6 @@ class Objeto {
     this.x = x;
     this.y = y;
     this.imagem = imagem;
-    this.id = Math.random();
   }
 
   void desenha(ArrayList<Objeto> listaObjetos) {

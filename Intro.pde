@@ -2,7 +2,7 @@ class Intro {
 
   PFont fontTitulo, fontTexto;
 
-  void mostrarIntroducao() {
+  void mostrarIntroducao1() {
 
     pushStyle();
 
@@ -18,7 +18,7 @@ class Intro {
 
     // Título e texto dentro do retângulo
     textAlign(CENTER);
-    textSize(20);
+    textSize(25);
     fill(0);
     text(
       "Instruções do jogo:\n\n" +
@@ -27,45 +27,65 @@ class Intro {
       "Seta para baixo: move o robô para baixo.\n" +
       "Seta para a direita: move o robô para a direita.\n\n" +
       "Objetivo: Regar todas as plantas e coletar todo o lixo antes da bateria acabar.\n" +
-      "Existem estações de recarga, inimigos, obstáculos e items especiais.",
+      "Existem estações de recarga, inimigos, obstáculos e items especiais." +
+      "Os items especiais aumentam a velocidade do robô e aumentam a pontuação",
       width / 2, height / 1.6
       );
 
     textAlign(CENTER);
-    textSize(25);
+    textSize(35);
     fill(255);
     text("Pressione ENTER para começar!", width / 2, height - 50);
 
     popStyle();
   }
 
-  void mostraInstrucoes() {
+  void mostrarIntroducao() {
 
     pushStyle();
 
-    background(10, 148, 196);
+    background(17, 100, 23);
 
-    // Camada transparente
-    //fill(0, 0, 0, 150); // Preto com transparência
-    //rect(50, 100, width - 100, height - 200);
+    // Exibe o logo em uma posição desejada
+    // Centraliza o logo na tela
+    float logoX = (width - logo.width) / 2;
+    float logoY = (height - logo.height) / 5;
 
-    textAlign(LEFT);
-    textSize(18);
-    text(
-      "Seta para cima: move o robô para cima.\n" +
-      "Seta para a esquerda: move o robô para a esquerda.\n" +
-      "Seta para baixo: move o robô para baixo.\n" +
-      "Seta para a direita: move o robô para a direita.\n\n" +
-      "Objetivo: Regar todas as plantas e coletar todo o lixo antes da bateria acabar.\n" +
-      "Existem estações de recarga, inimigos, obstáculos e items especiais.",
-      100, 200
-      );
+    // SOURCE: https://fontmeme.com/fontes/fonte-games/
+    image(logo, logoX, logoY);
 
-    // Instrução para começar
-    textAlign(CENTER);
-    textSize(20);
+    // Definir as dimensões e posição do quadrado
+    int boxWidth = width / 2;
+    int boxHeight = 300;
+    int boxX = width / 2 - boxWidth / 2;
+    int boxY = height / 2;
+
+    // Desenhar o quadrado com bordas arredondadas
+    fill(255);
+    noStroke();
+    rect(boxX, boxY, boxWidth, boxHeight, 20); // Borda arredondada
+
+    // Adiciona o título
     fill(0);
-    text("Pressione ESPAÇO para começar!", width / 2, height - 50);
+    textSize(25);
+    text("Instruções do Jogo", boxX + boxWidth / 2.5, boxY + 40);
+
+    // Definine as instruções
+    textSize(20);
+    String instrucoes =
+      "\nUse as setas para mover o robô para cima, baixo, direita e esquerda.\n\n" +
+      "Objetivo: Regar todas as plantas e coletar todo o lixo antes da bateria acabar ou a velocidade\n chegar a zero.\n\n" +
+      "Estação de recarga: aumenta o nível da bateria.\nInimigos: diminui a velocidade do robô.\n" +
+      "Obstáculos: diminuem o nível da bateria.\nItems especiais: amentam o nível da bateria e a pontuação.";
+
+    // Desenhar o texto dentro do quadrado
+    //text(instructions, width / 2, boxY + 100);
+    text(instrucoes, boxX + 50, boxY + 70);
+
+    textAlign(CENTER);
+    textSize(35);
+    fill(10, 255, 8);
+    text("Pressione ENTER para começar!", width / 2, height - 50);
 
     popStyle();
   }

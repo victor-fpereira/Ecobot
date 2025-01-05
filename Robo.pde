@@ -3,13 +3,6 @@ class Robo extends Objeto {
   float x, y;
   boolean[] teclas = new boolean[4]; // Estados das teclas (cima, baixo, esquerda, direita)
 
-  float lado;
-  boolean mensagemExibida = false; // Controle para exibir mensagem uma única vez
-  boolean perseguindoRobo = false; // Indica se o quadrado é vermelho e deve perseguir o robo
-
-  boolean colidindo = false; // Controle de colisão atual
-
-
   // Verifica se as coordenadas x e y do objeto + lado do quadrado são menores que a distância do x e y do robo.
   // Se for, então o robo está enconstando no objeto.
   boolean verificarColisao(Objeto objeto, float roboX, float roboY) {

@@ -26,11 +26,6 @@ class Fases {
     // Atualiza a quantidade de fases do jogo
     numeroFases = configuracoes.length;
 
-    // Certifica de que o nível solicitado está dentro do intervalo válido
-    if (nivel < 1 || nivel > configuracoes.length) {
-      throw new IllegalArgumentException("Nível inválido: " + nivel);
-    }
-
     // Obtém a configuração correspondente ao nível
     int[] config = configuracoes[nivel - 1];  // -1 porque o array começa no zero
 
@@ -45,6 +40,7 @@ class Fases {
     Global.estacaoRecargaQtd = config[7];
   }
 
+  // Redefine as configurações quando o jogo reinicia
   void redefinirConfiguracoes() {
     Global.pontuacao = 0;
     fases.nivel = 1;
@@ -86,7 +82,6 @@ class Fases {
   void fimDoJogo(boolean  venceu) {
     background(10, 148, 196);
     new Pontuacao().mostraPontuacaoFinal();
-    //somFundo.stop();
     Global.fimJogo = true;
     if (tocarSomFimJogo) {
       if (venceu) {

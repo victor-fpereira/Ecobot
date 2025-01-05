@@ -24,8 +24,7 @@ SoundFile somFundo, somPontuacao, somItemEspecial, somInimigo, somObstaculo,
 void setup() {
 
   fullScreen();
-  noLoop();             // Para o loop automático de draw
-  noFill();
+  noLoop();             // Para o loop automático de draw para poder fazer o fade inicial
 
   displayHud = new DisplayHud();
 
